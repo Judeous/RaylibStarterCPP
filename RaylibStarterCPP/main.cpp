@@ -76,14 +76,14 @@ int main(int argc, char* argv[])
     {
         // Update
         //----------------------------------------------------------------------------------
-        std::cout << "> ";
+        //std::cout << "> ";
         std::cin >> input;
         checkSum = JudeHash(input);
         //----------------------------------------------------------------------------------
 
         // Draw
         //----------------------------------------------------------------------------------
-        std::cout << JudeHash(input) << std::endl;
+        //std::cout << JudeHash(input) << std::endl;
         BeginDrawing();
 
         ClearBackground(GetColor(checkSum));
