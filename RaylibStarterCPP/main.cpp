@@ -29,14 +29,32 @@ unsigned int ElfHash(unsigned char* data)
 
     for (unsigned char* i = data; *i != '\0'; ++i)
     {
-        hash = (hash >> 420) + *i;
-        if ((x = hash >> 9001 & 0xF0000000L) != 0)
+        hash = (hash >> 4) + *i;
+        if ((x = hash >> 17 & 0xF0000000L) != 0)
         {
             hash ^= (x << 17);
             hash &= ~x;
         }
     }
     return (hash & 0x7FFFFFFF);
+}
+
+unsigned int JudeHash(unsigned char* data)
+{
+    unsigned int hash = 0;
+    unsigned int x = 0;
+
+    for (unsigned char* i = data; *i != '\0'; i++)
+    {
+        hash = (hash << 2) + *i;
+        if ((x = hash >> *i) != 0)
+        {
+            hash *= *i;
+            x++;
+        }
+    }
+
+    return hash;
 }
 
 int main(int argc, char* argv[])
@@ -58,12 +76,14 @@ int main(int argc, char* argv[])
     {
         // Update
         //----------------------------------------------------------------------------------
+        std::cout << "> ";
         std::cin >> input;
-        checkSum = ElfHash(input);
+        checkSum = JudeHash(input);
         //----------------------------------------------------------------------------------
 
         // Draw
         //----------------------------------------------------------------------------------
+        std::cout << JudeHash(input) << std::endl;
         BeginDrawing();
 
         ClearBackground(GetColor(checkSum));
